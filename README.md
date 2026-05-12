@@ -69,30 +69,41 @@ Relocating or long-term traveling is a high-stakes decision with thousands of va
 
 ---
 
-## 🏗️ Architecture
-┌─────────────────────────────────────────────────────────────┐
-│                     USER INTERFACE                          │
-│              (Streamlit / CLI / Future API)                 │
-└──────────────────────┬──────────────────────────────────────┘
+## 🏗️ Architecture and Data Flow
+
+User Query
 │
-┌──────────────────────▼──────────────────────────────────────┐
-│                      AGENT CORE                             │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
-│  │   Off-Topic │  │  Tool Router │  │  Profile Extractor  │ │
-│  │   Filter    │  │  (RAG/Web)   │  │  (Budget/Pets/etc)  │ │
-│  └─────────────┘  └─────────────┘  └─────────────────────┘ │
-└──────────────────────┬──────────────────────────────────────┘
-│┌──────────────┼──────────────┐
-▼              ▼              ▼
-┌──────────────┐ ┌──────────┐ ┌──────────────┐
-│   ChromaDB   │ │  DDGS    │ │  LM Studio   │
-│   (RAG)      │ │ (Web)    │ │  (Qwen 3.5)  │
-│              │ │          │ │              │
-│ • Historical │ │ • Visa   │ │ • Reasoning  │
-│   cost data  │ │   rules  │ │ • Synthesis  │
-│ • Inflation  │ │ • Recent │ │ • Tool calls │
-│   indices    │ │   prices │ │              │
-└──────────────┘ └──────────┘ └──────────────┘
+▼
+┌──────────────┐
+│ Off-Topic  │ ──No──► Friendly redirect
+│   Filter   │
+└──────────────┘
+│ Yes
+▼
+┌──────────────┐
+│   Profile    │ ──Extracts budget, pets, work style
+│  Extractor   │
+└──────────────┘
+│
+▼
+┌──────────────┐
+│ Tool Router  │ ──Decides: RAG? Web? Both?
+│              │
+└──────────────┘
+│
+├───► ChromaDB RAG (historical prices + inflation)
+│
+└───► DDGS Web Search (visas, policies, recent data)
+│
+▼
+┌──────────────┐
+│   LLM        │ ──Synthesizes all sources
+│  (Qwen 3.5)  │ ──Explains reasoning
+│              │ ──Personalizes to user profile
+└──────────────┘
+│
+▼
+Final Answer
 
 ### Why This Architecture?
 
