@@ -71,39 +71,21 @@ Relocating or long-term traveling is a high-stakes decision with thousands of va
 
 ## 🏗️ Architecture and Data Flow
 
-User Query
-│
-▼
-┌──────────────┐
-│ Off-Topic  │ ──No──► Friendly redirect
-│   Filter   │
-└──────────────┘
-│ Yes
-▼
-┌──────────────┐
-│   Profile    │ ──Extracts budget, pets, work style
-│  Extractor   │
-└──────────────┘
-│
-▼
-┌──────────────┐
-│ Tool Router  │ ──Decides: RAG? Web? Both?
-│              │
-└──────────────┘
-│
-├───► ChromaDB RAG (historical prices + inflation)
-│
-└───► DDGS Web Search (visas, policies, recent data)
-│
-▼
-┌──────────────┐
-│   LLM        │ ──Synthesizes all sources
-│  (Qwen 3.5)  │ ──Explains reasoning
-│              │ ──Personalizes to user profile
-└──────────────┘
-│
-▼
-Final Answer
+```mermaid
+flowchart TD
+    A[User Query] --> B{Off-Topic Filter}
+    B -->|Yes, off-topic| C[Friendly Redirect]
+    B -->|No, on-topic| D[Profile Extractor]
+    D --> E[Tool Router]
+    E --> F[ChromaDB RAG<br/>historical prices]
+    E --> G[DDGS Web Search<br/>visas, policies, recent data]
+    F --> H[LLM - Qwen 3.5]
+    G --> H
+    H --> I[Final Answer]
+    
+    style C fill:#f9f,stroke:#333,stroke-width:2px
+    style H fill:#bbf,stroke:#333,stroke-width:2px
+```
 
 ### Why This Architecture?
 
