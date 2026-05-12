@@ -16,12 +16,6 @@
 - [Key Features](#-key-features)
 - [Architecture](#-architecture)
 - [Quick Start](#-quick-start)
-- [How It Works](#-how-it-works)
-- [Data Pipeline](#-data-pipeline)
-- [Evaluation & Benchmarks](#-evaluation--benchmarks)
-- [Future Improvements](#-future-improvements)
-- [Technical Decisions](#-technical-decisions)
-- [Acknowledgments](#-acknowledgments)
 
 ---
 
