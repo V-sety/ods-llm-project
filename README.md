@@ -63,7 +63,7 @@ Relocating or long-term traveling is a high-stakes decision with thousands of va
 | **Multi-source data fusion** | Historical cost data + real-time web search | ✅ |
 | **Structured tool calling** | JSON-format agent with forced database lookup | ✅ |
 | **Off-topic guardrails** | Keyword filter + prompt-based redirect | ✅ |
-| **Inflation-adjusted estimates** | Historical data (2022) adjusted via grocery inflation (2025/2026) | ✅ |
+| **Inflation-adjusted estimates** | Historical data (2022) adjusted via grocery inflation (2025/2026) | 🔄 |
 | **Conversational UI** | Streamlit chat interface with profile sidebar | 🔄 |
 | **Multi-city comparison** | Automatic batching of related queries | 🔄 |
 
